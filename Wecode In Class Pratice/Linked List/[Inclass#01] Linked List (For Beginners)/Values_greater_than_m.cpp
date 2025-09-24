@@ -80,7 +80,11 @@ node* search(List l, int x)
 
 void outputGreaterThan(List l, int m)
 {
-    if(l.head == NULL && l.tail == NULL) cout << "List is empty";
+    if(l.head == NULL && l.tail == NULL) 
+    {
+        cout << "List is empty";
+        return;
+    }
     node* p;
     p = l.head;
     bool found = false;

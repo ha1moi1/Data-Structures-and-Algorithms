@@ -13,6 +13,7 @@ struct List
 {
     node* head;
     node* tail;
+    int n;
 };
 
 void Init(List& l)
@@ -47,6 +48,7 @@ void addTail(node* p, List &l)
 
 void inputList(List &l, int n)
 {
+    l.n = n;
     if(n == 0) return;
     for(int i = 0; i < n; i++)
     {
@@ -69,31 +71,32 @@ void outputList(List l)
 
 node* findElement(List l, int i)
 {
-    if(l.head == NULL && l.tail == NULL)
+    if (l.head == NULL)
     {
         cout << "List is empty";
         return NULL;
     }
+    i--;
+    if(i >= l.n || i < 0)
+    {
+        cout << "The index is invalid";
+        return NULL;
+    }
     node* p = l.head;
     int index = 0;
-    
-    while(p != NULL)
+
+    while (p != NULL)
     {
-        if(index == i)
+        if (index == i)
         {
             return p;
         }
         p = p->link;
         index++;
     }
-    if(p == NULL)
-    {
-        cout << "The index is invalid";
-        return NULL;
-    }
-    cout << "List is empty";
-    return NULL;
+    return p;
 }
+
 
 int main()
 {
