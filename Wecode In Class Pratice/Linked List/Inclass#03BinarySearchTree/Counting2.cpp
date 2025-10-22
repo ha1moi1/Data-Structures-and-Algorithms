@@ -58,80 +58,64 @@ int countNodes(Tree t)
 
 int depthOfTree(Tree t)
 {
-    if (t == NULL) 
-        return 0;
-
+    if (t == NULL) return -1;
     int leftDepth = depthOfTree(t->left);
     int rightDepth = depthOfTree(t->right);
-
     return 1 + max(leftDepth, rightDepth);
 }
 
-int countEven(Tree t, int count)
+void countEven(Tree A, int &count)
 {
-    if (!t) return 0;
-    return count + countEven(t->left, count) + countEven(t->right, count);
+    if (A == NULL) return;
+    if (A->data % 2 == 0) count++;
+    countEven(A->left, count);
+    countEven(A->right, count);
 }
 
-int countOdd(Tree t, int count)
+void countOdd(Tree A, int &count)
 {
-    if (!t) return 0;
-    return count + countOdd(t->left, count) + countOdd(t->right, count);
+    if (A == NULL) return;
+    if (A->data % 2 != 0) count++;
+    countOdd(A->left, count);
+    countOdd(A->right, count);
 }
 
-int countPositive(Tree t)
+int countPositive(Tree A)
 {
-    if(!t) return 0;
-    int count = 0;
-    if(t->data > 0)
-    {
-        count++;
-    } 
-    return countPositive(t->left) + countPositive(t->right) + count;
+    if (A == NULL) return 0;
+    return (A->data > 0) + countPositive(A->left) + countPositive(A->right);
 }
 
-int countNegative(Tree t)
+int countNegative(Tree A)
 {
-    if(!t) return 0;
-    int count = 0;
-    if(t->data < 0)
-    {
-        count++;
-    } 
-    return countNegative(t->left) + countNegative(t->right) + count;
+    if (A == NULL) return 0;
+    return (A->data < 0) + countNegative(A->left) + countNegative(A->right);
 }
 
 bool isPrime(int n)
 {
-    if(n < 2) return false;
-    if(n == 2) return true;
-    if(n % 2 == 0) return false;
-    for(int i = 3; i * i <= n; i += 2)
-    {
-        if(n % i == 0) return false;
-    }
+    if (n < 2) return false;
+    if (n == 2) return true;
+    if (n % 2 == 0) return false;
+    for (int i = 3; i * i <= n; i += 2)
+        if (n % i == 0) return false;
     return true;
 }
 
-int countPrime(Tree t)
+int countPrime(Tree T)
 {
-    if(t == NULL) return 0;
-
-    int count = 0;
-    if(isPrime(t->data)) count = 1;
-
-    return count + countPrime(t->left) + countPrime(t->right);
+    if (T == NULL) return 0;
+    return (isPrime(T->data) ? 1 : 0)
+           + countPrime(T->left) + countPrime(T->right);
 }
 
-void listPrime(Tree t)
+void listPrime(Tree T)   // NLR
 {
-    if(t == NULL) return;
-
-    if(isPrime(t->data))
-        cout << t->data << " ";
-
-    listPrime(t->left);
-    listPrime(t->right);
+    if (T == NULL) return;
+    if (isPrime(T->data))
+        cout << T->data << " ";
+    listPrime(T->left);
+    listPrime(T->right);
 }
 
 int main()
